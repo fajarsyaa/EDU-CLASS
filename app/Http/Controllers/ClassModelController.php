@@ -12,7 +12,8 @@ class ClassModelController extends Controller
      */
     public function index()
     {
-        //
+        $classes = ClassModel::all();
+        return response()->json($classes);
     }
 
     /**
@@ -28,7 +29,14 @@ class ClassModelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'desc' => 'required',
+        ]);
+    
+        $class = ClassModel::create($request->all());
+    
+        return response()->json($class, 201);
     }
 
     /**
@@ -36,7 +44,7 @@ class ClassModelController extends Controller
      */
     public function show(ClassModel $classModel)
     {
-        //
+        return response()->json($classModel);
     }
 
     /**
@@ -52,7 +60,14 @@ class ClassModelController extends Controller
      */
     public function update(Request $request, ClassModel $classModel)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'desc' => 'required',
+        ]);
+
+        $classModel->update($request->all());
+
+        return response()->json($classModel);
     }
 
     /**
@@ -60,6 +75,8 @@ class ClassModelController extends Controller
      */
     public function destroy(ClassModel $classModel)
     {
-        //
+        $classModel->delete();
+
+        return response()->json(['message' => 'Class deleted successfully']);    
     }
 }
