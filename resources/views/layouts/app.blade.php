@@ -224,13 +224,22 @@
                   <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="../../user-image.jpg" width="40" />
                     <div class="caption ms-3 d-none d-md-block ">
-                        <h6 class="mb-0 caption-title">Austin Robertson</h6>
-                        <p class="mb-0 caption-sub-title">Administrator</p>
+                      <h6 class="mb-0 caption-title">{{ Auth::user()->fullname }}</h6>
+                      <p class="mb-0 caption-sub-title">{{ ucfirst(Auth::user()->role) }}</p>                      
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="../../dashboard/auth/sign-in.html">Logout</a></li>
-                  </ul>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                    </li>
+                  </ul> 
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
                 </li>
               </ul>
             </div>

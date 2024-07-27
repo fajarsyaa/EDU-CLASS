@@ -22,4 +22,4 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 Route::post('/login', [UserController::class, 'authenticate'])->name('login.authenticate')->middleware('guest');
 Route::get('/register', [UserController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/register', [UserController::class, 'register_create'])->name('register.create')->middleware('guest');
-Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');

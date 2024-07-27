@@ -17,7 +17,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function authencticate(Request $request)
+    public function authenticate(Request $request)
     {
          // Validasi input
          $validator = Validator::make($request->all(), [
@@ -37,7 +37,7 @@ class UserController extends Controller
         // Coba login
         if (Auth::attempt($credentials)) {
             // Jika berhasil, redirect ke dashboard
-            return redirect()->route('dashboard')->with('success', 'Selamat datang kembali!');
+            return redirect()->route('index')->with('success', 'Selamat datang kembali!');
         }
 
         // Jika gagal, redirect kembali ke halaman login dengan pesan error
@@ -72,8 +72,7 @@ class UserController extends Controller
         // Simpan pengguna baru
         $user = User::create([
             'username' => $request->username,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
+            'fullname' => $request->first_name . ' ' . $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role
@@ -82,7 +81,7 @@ class UserController extends Controller
         // Login pengguna baru
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Akun berhasil dibuat. Selamat datang di aplikasi kami!');
+        return redirect()->route('index')->with('success', 'Akun berhasil dibuat. Selamat datang di aplikasi kami!');
     }
 
     public function logout()
