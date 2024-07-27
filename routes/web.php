@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClassModelController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
-Route::resource('/users',ClassModelController::class);
+Route::resource('/classes',ClassModelController::class);
+Route::get('/', [DashboardController::class, 'index'])->name("index");

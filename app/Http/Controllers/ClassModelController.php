@@ -10,10 +10,13 @@ class ClassModelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $classes = ClassModel::all();
-        return response()->json($classes);
+        $search = $request->query('search');
+        $classes = ClassModel::when($search, function ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+        })->paginate(6);
+        return view('dashboard.class.index',compact('classes'));
     }
 
     /**
@@ -21,7 +24,7 @@ class ClassModelController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.class.create');
     }
 
     /**
@@ -32,19 +35,25 @@ class ClassModelController extends Controller
         $request->validate([
             'name' => 'required',
             'desc' => 'required',
+            'user_id' => 'required'
         ]);
-    
-        $class = ClassModel::create($request->all());
-    
-        return response()->json($class, 201);
+
+        try {
+            ClassModel::create($request->all());
+            session()->flash('success', 'Kelas baru berhasil dibuat!');           
+            return redirect()->route('classes.index');
+        } catch (\Exception $e) {
+            return redirect()->route('classes.index');
+        }       
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ClassModel $classModel)
-    {
-        return response()->json($classModel);
+    public function show($id)
+    {        
+        $classModel = ClassModel::find($id);        
+        return view('dashboard.class.update', compact('classModel'));
     }
 
     /**
@@ -58,25 +67,44 @@ class ClassModelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ClassModel $classModel)
-    {
-        $request->validate([
-            'name' => 'required',
-            'desc' => 'required',
+    public function update(Request $request, $id)
+    {        
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'desc' => 'required|string',
         ]);
-
-        $classModel->update($request->all());
-
-        return response()->json($classModel);
+            
+        $classModel = ClassModel::find($id);
+            
+        if (!$classModel) {
+            return response()->json(['error' => 'Class not found'], 404);
+        }
+            
+        $classModel->name = $validatedData['name'];
+        $classModel->desc = $validatedData['desc'];
+            
+        try {
+            $classModel->save();
+            session()->flash('success', 'Kelas berhasil diupdate!');            
+            return redirect()->route('classes.index');
+        } catch (\Exception $e) {
+            return redirect()->route('classes.index');
+        }
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ClassModel $classModel)
+    public function destroy(Request $request,ClassModel $classModel)
     {
-        $classModel->delete();
-
-        return response()->json(['message' => 'Class deleted successfully']);    
+        $classModel = ClassModel::find($request->id);
+        try {
+            session()->flash('success', 'Kelas berhasil dihapus! sayang sekali kita harus berpisah dengan kelas '.$classModel->name);                      
+            $classModel->delete();
+            return redirect()->route('classes.index');
+        } catch (\Exception $e) {
+            return redirect()->route('classes.index');
+        }  
     }
 }
