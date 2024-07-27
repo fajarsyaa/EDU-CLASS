@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Hope UI | Responsive Bootstrap 5 Admin Dashboard Template</title>
+      <title>{{ $title }}</title>
       
       <!-- Favicon -->
       <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
@@ -79,79 +79,67 @@
                               
                               
                               
-                              <h4 class="logo-title ms-3">Hope UI</h4>
+                              <h4 class="logo-title ms-3">Edu Class</h4>
                            </a>
                            <h2 class="mb-2 text-center">Sign Up</h2>
-                           <p class="text-center">Create your Hope UI account.</p>
-                           <form>
+                           <p class="text-center">Create your Edu Class account.</p>
+                           <form action="{{ route('register.create') }}" method="post">
+                              @csrf
                               <div class="row">
-                                 <div class="col-lg-6">
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label for="username" class="form-label">Username</label>
+                                          <input type="text" class="form-control" id="username" name="username" placeholder=" ">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label for="first-name" class="form-label">First Name</label>
+                                          <input type="text" class="form-control" id="first-name" name="first_name" placeholder=" ">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label for="last-name" class="form-label">Last Name</label>
+                                          <input type="text" class="form-control" id="last-name" name="last_name" placeholder=" ">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label for="email" class="form-label">Email</label>
+                                          <input type="email" class="form-control" id="email" name="email" placeholder=" ">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label for="password" class="form-label">Password</label>
+                                          <input type="password" class="form-control" id="password" name="password" placeholder=" ">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label for="confirm-password" class="form-label">Confirm Password</label>
+                                          <input type="password" class="form-control" id="confirm-password" name="password_confirmation" placeholder=" ">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12">
                                     <div class="form-group">
-                                       <label for="full-name" class="form-label">Full Name</label>
-                                       <input type="text" class="form-control" id="full-name" placeholder=" ">
+                                        <label for="role" class="form-label">Role</label>
+                                        <select class="form-control" id="role" name="role">
+                                            <option value="teacher">Teacher</option>
+                                            <option value="student">Student</option>
+                                        </select>
                                     </div>
-                                 </div>
-                                 <div class="col-lg-6">
-                                    <div class="form-group">
-                                       <label for="last-name" class="form-label">Last Name</label>
-                                       <input type="text" class="form-control" id="last-name" placeholder=" ">
-                                    </div>
-                                 </div>
-                                 <div class="col-lg-6">
-                                    <div class="form-group">
-                                       <label for="email" class="form-label">Email</label>
-                                       <input type="email" class="form-control" id="email" placeholder=" ">
-                                    </div>
-                                 </div>
-                                 <div class="col-lg-6">
-                                    <div class="form-group">
-                                       <label for="phone" class="form-label">Phone No.</label>
-                                       <input type="text" class="form-control" id="phone" placeholder=" ">
-                                    </div>
-                                 </div>
-                                 <div class="col-lg-6">
-                                    <div class="form-group">
-                                       <label for="password" class="form-label">Password</label>
-                                       <input type="password" class="form-control" id="password" placeholder=" ">
-                                    </div>
-                                 </div>
-                                 <div class="col-lg-6">
-                                    <div class="form-group">
-                                       <label for="confirm-password" class="form-label">Confirm Password</label>
-                                       <input type="text" class="form-control" id="confirm-password" placeholder=" ">
-                                    </div>
-                                 </div>
-                                 <div class="col-lg-12 d-flex justify-content-center">
-                                    <div class="form-check mb-3">
-                                       <input type="checkbox" class="form-check-input" id="customCheck1">
-                                       <label class="form-check-label" for="customCheck1">I agree with the terms of use</label>
-                                    </div>
-                                 </div>
+                                </div>
                               </div>
                               <div class="d-flex justify-content-center">
-                                 <button type="submit" class="btn btn-primary">Sign Up</button>
-                              </div>
-                              <p class="text-center my-3">or sign in with other accounts?</p>
-                              <div class="d-flex justify-content-center">
-                                 <ul class="list-group list-group-horizontal list-group-flush">
-                                    <li class="list-group-item border-0 pb-0">
-                                       <a href="#"><img src="../../assets/images/brands/fb.svg" alt="fb"></a>
-                                    </li>
-                                    <li class="list-group-item border-0 pb-0">
-                                       <a href="#"><img src="../../assets/images/brands/gm.svg" alt="gm"></a>
-                                    </li>
-                                    <li class="list-group-item border-0 pb-0">
-                                       <a href="#"><img src="../../assets/images/brands/im.svg" alt="im"></a>
-                                    </li>
-                                    <li class="list-group-item border-0 pb-0">
-                                       <a href="#"><img src="../../assets/images/brands/li.svg" alt="li"></a>
-                                    </li>
-                                 </ul>
+                                  <button type="submit" class="btn btn-primary">Sign Up</button>
                               </div>
                               <p class="mt-3 text-center">
-                                 Already have an Account <a href="sign-in.html" class="text-underline">Sign In</a>
+                                  Already have an Account <a href="{{ route('login') }}" class="text-underline">Sign In</a>
                               </p>
-                           </form>
+                          </form>
+                          
                         </div>
                      </div>    
                   </div>
