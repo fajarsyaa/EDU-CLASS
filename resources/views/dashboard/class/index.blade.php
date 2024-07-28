@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between flex-wrap">
-                        <form action="{{ route('classes.index') }}" method="GET" class="d-flex mb-2">
+                        <form action="{{ route('classes.index') }}" method="GET" class="d-flex mb-2">                            
                             <input type="text" name="search" class="form-control me-2" placeholder="Search by class name..." value="{{ request()->query('search') }}">
                             <button type="submit" class="btn btn-primary">Search</button>
                         </form>

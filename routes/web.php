@@ -19,3 +19,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/classes',ClassModelController::class);
 Route::get('/', [DashboardController::class, 'index'])->name("index");
+
