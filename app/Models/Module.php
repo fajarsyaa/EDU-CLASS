@@ -23,8 +23,4 @@ class Module extends Model
         return $this->hasMany(ModuleItem::class);
     }
 
-    public function classes()
-    {
-        return $this->belongsToMany(ClassModel::class, 'class_module');
-    }
 }
