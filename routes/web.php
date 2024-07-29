@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClassModelController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserClassController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +26,8 @@ Route::post('/login', [UserController::class, 'authenticate'])->name('login.auth
 Route::get('/register', [UserController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/register', [UserController::class, 'register_create'])->name('register.create')->middleware('guest');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/', [DashboardController::class, 'index'])->name("index");
+Route::resource('/classes',ClassModelController::class);
+Route::resource('/comments', CommentController::class);
+Route::resource('/user-classes', UserClassController::class);
+
