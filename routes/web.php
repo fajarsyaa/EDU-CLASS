@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClassModelController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserClassController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +20,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/', [DashboardController::class, 'index'])->name("index")->middleware('auth');
+
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
+Route::post('/login', [UserController::class, 'authenticate'])->name('login.authenticate')->middleware('guest');
+Route::get('/register', [UserController::class, 'register'])->name('register')->middleware('guest');
+Route::post('/register', [UserController::class, 'register_create'])->name('register.create')->middleware('guest');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
 Route::get('/', [DashboardController::class, 'index'])->name("index");
+Route::resource('/classes',ClassModelController::class)->middleware(['auth', 'teacher']);
+Route::resource('/comments', CommentController::class)->middleware('auth');
+Route::resource('/user-classes', UserClassController::class)->middleware('auth');
+
 
 Route::resource('module', ModuleController::class);
