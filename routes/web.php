@@ -27,7 +27,7 @@ Route::get('/register', [UserController::class, 'register'])->name('register')->
 Route::post('/register', [UserController::class, 'register_create'])->name('register.create')->middleware('guest');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
 Route::get('/', [DashboardController::class, 'index'])->name("index");
-Route::resource('/classes',ClassModelController::class);
-Route::resource('/comments', CommentController::class);
-Route::resource('/user-classes', UserClassController::class);
+Route::resource('/classes',ClassModelController::class)->middleware('auth');
+Route::resource('/comments', CommentController::class)->middleware('auth');
+Route::resource('/user-classes', UserClassController::class)->middleware('auth');
 

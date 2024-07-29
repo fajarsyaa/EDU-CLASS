@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edu Class | User List')
+@section('title', 'Edu Class | Add List')
 @section('content')
 <div class="conatiner-fluid content-inner mt-n5 py-0">
     <div>
@@ -15,7 +15,7 @@
                         <p>Isi form dibahawah dan submit, untuk menambahkan kelas baru di EDU CLASS</p>
                         <form class="row g-3 needs-validation" novalidate action="{{ route('classes.store') }}" method="POST">
                             @csrf
-                            <input type="hidden" name="user_id" value="1">
+                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                             <div class="form-group">
                                 <label for="validationCustom01" class="form-label">Nama Kelas</label>
                                 <input type="text" class="form-control" id="validationCustom01" name="name" required>

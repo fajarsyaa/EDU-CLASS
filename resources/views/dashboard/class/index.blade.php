@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edu Class | User List')
+@section('title', 'Edu Class | Class List')
 @section('content')
 
 <div class="container-fluid content-inner mt-n5 py-0">
