@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ClassModelController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/', [DashboardController::class, 'index'])->name("index")->middleware('auth');
 
-Route::resource('/users',ClassModelController::class);
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
+Route::post('/login', [UserController::class, 'authenticate'])->name('login.authenticate')->middleware('guest');
+Route::get('/register', [UserController::class, 'register'])->name('register')->middleware('guest');
+Route::post('/register', [UserController::class, 'register_create'])->name('register.create')->middleware('guest');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
