@@ -68,7 +68,7 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
+    
         // Simpan pengguna baru
         $user = User::create([
             'username' => $request->username,
@@ -77,10 +77,10 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role
         ]);
-
+    
         // Login pengguna baru
         Auth::login($user);
-
+    
         return redirect()->route('index')->with('success', 'Akun berhasil dibuat. Selamat datang di aplikasi kami!');
     }
 

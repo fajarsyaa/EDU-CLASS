@@ -76,13 +76,21 @@
                               </div>
                               <!--logo End-->
                               
-                              
-                              
-                              
                               <h4 class="logo-title ms-3">Edu Class</h4>
                            </a>
                            <h2 class="mb-2 text-center">Sign Up</h2>
                            <p class="text-center">Create your Edu Class account.</p>
+
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            
                            <form action="{{ route('register.create') }}" method="post">
                               @csrf
                               <div class="row">
