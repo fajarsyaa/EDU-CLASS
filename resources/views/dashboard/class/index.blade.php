@@ -34,9 +34,9 @@
                 <div class="col">
                     <div class="mb-0 card">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $class->name }}</h5>
+                            <a href="{{ route('classes.show', $class->id) }}" class="card-title h5">{{ $class->name }}</a>
                             <p class="card-text">{{ $class->desc }}</p>
-                            <a href="{{ route('classes.show', $class->id) }}" class="btn btn-warning mt-2">Edit Kelas</a>
+                            <a href="{{ route('classes.edit', $class->id) }}" class="btn btn-warning mt-2">Edit Kelas</a>
                             <form action="{{ route('classes.destroy', $class->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
@@ -44,7 +44,7 @@
                                 <button type="submit" class="btn btn-danger mt-2" onclick="return confirm('Apakah Yakin Ingin Menghapus Kelas Ini ?')">Delete</button>
                             </form>
                         </div>
-                        <div class="card-footer text-muted">
+                        <div class="px-4 pb-3 text-muted">
                             {{ $class->created_at->diffForHumans() }}
                         </div>
                     </div>

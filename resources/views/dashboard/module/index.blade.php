@@ -4,47 +4,56 @@
 <div>
     <div class="row">
        <div class="col-sm-12">
-          <div class="card">
-             <div class="card-header d-flex justify-content-between">
+         <div class="card">
+              <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
-                   <h4 class="card-title">Name Class</h4>
+                  <h4 class="card-title">{{$class->name}}</h4>
                 </div>
-             </div>
-             <div class="card-body px-0">
-             </div>
+                  <a href="{{ route("module.create",$class->id)}}" class="btn btn-success">Add Module</a>
+              </div>
+              <div class="card-body px-4">
+                {{$class->desc}}
+              </div>
+
           </div>
+          
        </div>
        <div class="col-sm-12">
+         @foreach ($modules as $item)  
          <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between pb-4">
                <div class="header-title">
                   <div class="d-flex flex-wrap">
                      <div class="media-support-user-img me-3">
-                        <img class="rounded-pill img-fluid avatar-60 p-1 bg-soft-info" src="../../assets/images/avatars/05.png" alt="">
+                        <img class="rounded-pill img-fluid avatar-60 p-1 bg-soft-info" src="../../assets/images/avatars/01.png" alt="">
                      </div>
                      <div class="media-support-info mt-2">
-                        <h5 class="mb-0">John Doe</h5>
-                        <p class="mb-0 text-primary">Teacher</p>
+                        <h5 class="mb-0">{{ optional($item->creator)->fullname }}</h5>
+                        <p class="mb-0 text-primary">{{ ucwords(optional($item->creator)->role) }}</p>
                      </div>
                   </div>
                </div>                        
                <div class="dropdown">
                   <span class="dropdown-toggle" id="dropdownMenuButton07" data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                  1 Hr
+                     {{ $item->created_at->diffForHumans() }}
                   </span>
                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton07">
-                     <a class="dropdown-item " href="javascript:void(0);">Action</a>
-                     <a class="dropdown-item " href="javascript:void(0);">Another action</a>
-                     <a class="dropdown-item " href="javascript:void(0);">Something else here</a>
+                     <a class="dropdown-item" href="{{ route('module.edit', $item->id) }}">Edit</a>
+                     <form action="{{ route('module.destroy', $item->id) }}" method="POST" class="d-inline">
+                         @csrf
+                         @method('DELETE')
+                         <button type="submit" class="dropdown-item">Delete</button>
+                     </form>
                   </div>
                </div>
-            </div>
+            </div>    
             <div class="card-body p-0">
-                  <p class="p-3 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus</p>
-                  <div class="comment-area p-3"><hr class="mt-0">
+                  <a href="{{route('module.show',$item->id)}}" class="p-3 mb-0 h5">{{$item['name']}}</a>
+                  
+                  <div class="px-3"><p>{{ $item['desc'] }}</p><hr class="mt-0">
                   <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
                      <div class="d-flex align-items-center">
-                        <a class="d-flex align-items-center feather-icon ms-1" onclick="showComments()">
+                        <a class="d-flex align-items-center feather-icon ms-1" id="{{$item->id}}" onclick="showComments(this)">
                            <svg class="icon-20" width="20" viewBox="0 0 24 24">
                                <path fill="currentColor" d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z" />
                            </svg>
@@ -53,8 +62,9 @@
                        
                      </div>
                   </div>
-                  <ul class="list-inline rounded m-0 border p-1" id="comments" hidden>
+                  <ul class="list-inline rounded m-0 border p-1" id="comments_{{$item->id}}" hidden>
                   </ul>
+               
                   <form class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
                      <input type="text" class="form-control rounded" placeholder="Lovely!">
                      <div class="comment-attagement d-flex">
@@ -69,6 +79,7 @@
                </div>                              
             </div>
          </div>
+         @endforeach
        </div>
     </div>
  </div>
@@ -76,29 +87,28 @@
 
 @section('scripts')
 <script>
-   const showComments = () => {
-       const comments = $('#comments');
-
-       if (comments.is('[hidden]')) {
-           comments.removeAttr('hidden');
-           comments.append(`
+   const showComments = (i) => {
+         const comments = $(`#comments_${i.id}`);
+         if (comments.is('[hidden]')) {
+            comments.removeAttr('hidden');
+            comments.append(`
                <li class="mb-2 border rounded p-2 bg-white">
-                   <div class="d-flex">
-                       <img src="../../assets/images/avatars/03.png" alt="userimg" class="avatar-50 p-1 pt-2 bg-soft-primary rounded-pill img-fluid">
-                       <br/>
-                       <div class="ms-3">
+                     <div class="d-flex">
+                        <img src="../../assets/images/avatars/avtar_2.png" alt="userimg" class="avatar-50 p-1 pt-2 bg-soft-primary rounded-pill img-fluid">
+                        <br/>
+                        <div class="ms-3">
                            <h6 class="mb-1">Monty Carlo</h6>
                            <p class="mb-1">Lorem ipsum dolor sit amet</p>
                            <div class="d-flex flex-wrap align-items-center mb-1">
-                               <span> 5 min </span>
+                                 <span> 5 min </span>
                            </div>
-                       </div>
-                   </div>
+                        </div>
+                     </div>
                </li>
-           `);
-       } else {
-           comments.attr('hidden', true);
-           comments.empty();
-       }
+            `);
+         } else {
+            comments.attr('hidden', true);
+            comments.empty();
+         }
    }
 </script>
