@@ -27,6 +27,12 @@ Route::post('/login', [UserController::class, 'authenticate'])->name('login.auth
 Route::get('/register', [UserController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/register', [UserController::class, 'register_create'])->name('register.create')->middleware('guest');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/user-list', [UserController::class, 'userList'])->name('user.list')->middleware('auth');
+Route::get('/user-create', [UserController::class, 'userCreate'])->name('user.create')->middleware('auth');
+Route::post('/user-create-action', [UserController::class, 'userCreateAction'])->name('user.createaction')->middleware('auth');
+Route::get('/user/{user}/edit', [UserController::class, 'userEdit'])->name('user.edit')->middleware('auth');
+Route::put('/user/{user}', [UserController::class, 'userUpdate'])->name('user.update')->middleware('auth');
+Route::delete('/user/{user}', [UserController::class, 'userDelete'])->name('user.destroy')->middleware('auth');
 
 Route::group(['middleware' => ['auth', 'teacher'], 'prefix' => 'classes'], function() {
     Route::get('/', [ClassModelController::class, 'index'])->name('classes.index');
