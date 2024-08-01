@@ -36,13 +36,15 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $class->name }}</h5>
                             <p class="card-text">{{ $class->desc }}</p>
-                            <a href="{{ route('classes.show', $class->id) }}" class="btn btn-warning mt-2">Edit Kelas</a>
-                            <form action="{{ route('classes.destroy', $class->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="id" value="{{$class->id}}">
-                                <button type="submit" class="btn btn-danger mt-2" onclick="return confirm('Apakah Yakin Ingin Menghapus Kelas Ini ?')">Delete</button>
-                            </form>
+                            @if (auth()->check() && auth()->user()->role === 'teacher')
+                                <a href="{{ route('classes.show', $class->id) }}" class="btn btn-warning mt-2">Edit Kelas</a>
+                                <form action="{{ route('classes.destroy', $class->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="id" value="{{$class->id}}">
+                                    <button type="submit" class="btn btn-danger mt-2" onclick="return confirm('Apakah Yakin Ingin Menghapus Kelas Ini ?')">Delete</button>
+                                </form>
+                            @endif
                         </div>
                         <div class="card-footer text-muted">
                             {{ $class->created_at->diffForHumans() }}
