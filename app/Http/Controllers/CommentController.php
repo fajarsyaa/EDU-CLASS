@@ -30,7 +30,7 @@ class CommentController extends Controller
         ]);
 
         Comment::create($request->all());
-        return redirect()->route('comments.index')->with('success', 'Comment created successfully.');
+        return redirect()->back()->with('success', 'Comment created successfully.');
     }
 
     // Display the specified comment
@@ -64,4 +64,10 @@ class CommentController extends Controller
         $comment->delete();
         return redirect()->route('comments.index')->with('success', 'Comment deleted successfully.');
     }
+
+    public function getComments($id)
+    {
+        $comments = Comment::where('module_id', $id)->with('user')->get();
+        return response()->json($comments);
+    }   
 }

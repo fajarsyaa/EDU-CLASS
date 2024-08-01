@@ -45,9 +45,12 @@ Route::group(['middleware' => ['auth', 'teacher'], 'prefix' => 'classes'], funct
     Route::get('/{class}', [ClassModelController::class, 'show'])->name('classes.show');
 });
 
-Route::resource('/comments', CommentController::class)->middleware('auth');
 Route::resource('/user-classes', UserClassController::class)->middleware('auth');
-Route::resource('/classes',ClassModelController::class); // middleware dihandle di controller
+Route::resource('/classes',ClassModelController::class);
+
+Route::resource('/comments', CommentController::class)->middleware('auth');
+Route::get('comments/{module_id}', [CommentController::class, 'getComments'])->name('comments.get');
+
 
 Route::prefix('module')->group(function () {
     Route::get('/', [ModuleController::class, 'index'])->name('module.index');
@@ -57,4 +60,5 @@ Route::prefix('module')->group(function () {
     Route::get('/{id}/edit', [ModuleController::class, 'edit'])->name('module.edit');
     Route::match(['put', 'patch'], '/{id}', [ModuleController::class, 'update'])->name('module.update');
     Route::delete('/{id}', [ModuleController::class, 'destroy'])->name('module.destroy');
+    
 });
