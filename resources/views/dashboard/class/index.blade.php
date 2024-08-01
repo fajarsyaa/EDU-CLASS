@@ -34,7 +34,7 @@
                 <div class="col">
                     <div class="mb-0 card">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $class->name }}</h5>
+                            <a href="{{ route('classes.show', $class->id) }}" class="card-title h5">{{ $class->name }}</a>
                             <p class="card-text">{{ $class->desc }}</p>
                             @if (auth()->check() && auth()->user()->role === 'teacher')
                                 <a href="{{ route('classes.show', $class->id) }}" class="btn btn-warning mt-2">Edit Kelas</a>
@@ -46,7 +46,7 @@
                                 </form>
                             @endif
                         </div>
-                        <div class="card-footer text-muted">
+                        <div class="px-4 pb-3 text-muted">
                             {{ $class->created_at->diffForHumans() }}
                         </div>
                     </div>

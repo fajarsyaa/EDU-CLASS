@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClassModel;
+use App\Models\Module;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ClassModelController extends Controller
@@ -58,16 +60,28 @@ class ClassModelController extends Controller
      */
     public function show($id)
     {        
-        $classModel = ClassModel::find($id);        
-        return view('dashboard.class.update', compact('classModel'));
+        $classModel = ClassModel::find($id);
+
+        $modules = Module::with('creator')
+            ->where('class_id', $id)
+            ->get();
+        
+        // dd($modules);
+
+        return view('dashboard.module.index', [
+            'title' => 'Edu Class | Module',
+            'modules' => $modules,
+            'class' => $classModel
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ClassModel $classModel)
+    public function edit($id)
     {
-        //
+        $classModel = ClassModel::find($id);        
+        return view('dashboard.class.update', compact('classModel'));
     }
 
     /**
