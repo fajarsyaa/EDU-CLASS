@@ -11,19 +11,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $classId = $request->route('class');
-    
-        if ($classId) {
-            $modules = Module::where('class_id', $classId)->get();
-        } else {
-            $modules = Module::all();
-        }
+        $modules = Module::with(['creator', 'class'])->get();
 
-        dd($modules);
-    
-        return view('dashboard.module.index', [
+        return view('dashboard.module.list', [
             'title' => 'Edu Class | Module',
             'modules' => $modules
         ]);
@@ -45,6 +37,8 @@ class ModuleController extends Controller
             'status' => 'required',
             'class_id'=>'required',
         ]);
+
+        $request['status'] = 0;
 
         $module = Module::create($request->all());
 
@@ -124,4 +118,31 @@ class ModuleController extends Controller
 
         return redirect()->route('classes.show',$class_id)->with('success', 'Module deleted successfully.');
     }
+
+    public function approve(Request $request, $id)
+    {
+        $value = $request->input('value');
+        if (is_null($value)) {
+            return redirect()->back()->with('error', 'Parameter tidak valid.');
+        }
+
+        $module = Module::find($id);
+
+        if (!$module) {
+            return redirect()->back()->with('error', 'Module tidak ditemukan.');
+        }
+
+        if ($value == 1) {
+            $module->status = 1;
+        } elseif ($value == 2) {
+            $module->status = 2;
+        } else {
+            return redirect()->back()->with('error', 'Tindakan tidak valid.');
+        }
+
+        $module->save();
+
+        return redirect()->route('module.index')->with('success', 'Tindakan berhasil dilakukan.');
+    }
+    
 }

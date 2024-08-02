@@ -58,9 +58,8 @@ class ClassModelController extends Controller
 
         $modules = Module::with('creator')
             ->where('class_id', $id)
+            ->where('status', 1)
             ->get();
-        
-        // dd($modules);
 
         return view('dashboard.module.index', [
             'title' => 'Edu Class | Module',

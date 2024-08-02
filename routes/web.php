@@ -52,6 +52,7 @@ Route::prefix('module')->group(function () {
     Route::post('/', [ModuleController::class, 'store'])->name('module.store');
     Route::get('/{id}', [ModuleController::class, 'show'])->name('module.show');
     Route::get('/{id}/edit', [ModuleController::class, 'edit'])->name('module.edit');
+    Route::patch('/approve/{id}', [ModuleController::class, 'approve'])->name('module.approve');
     Route::match(['put', 'patch'], '/{id}', [ModuleController::class, 'update'])->name('module.update');
     Route::delete('/{id}', [ModuleController::class, 'destroy'])->name('module.destroy');
 });

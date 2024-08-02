@@ -41,13 +41,37 @@
                                 @foreach($files as $file)
                                     <li class="list-group-item">
                                         <a href="{{ Storage::url(str_replace('/storage/', '', $file->url)) }}" download>{{ basename($file->name) }}</a>
-                                        {{-- <a href="{{ asset('storage/' . $file->url) }}" download>{{ basename($file->name) }}</a> --}}
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="form-group">
-                            <a href="{{ route('classes.show',$module->class_id) }}" class="btn btn-primary">Kembali</a>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <div class="ml-auto">
+                            <form action="{{ route('module.approve', ['id' => $module->id]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="value" value="1">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <svg class="icon-18" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Approve
+                                </button>
+                            </form>
+                            
+                            <form action="{{ route('module.approve', ['id' => $module->id]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="value" value="2">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <svg class="icon-18" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Reject
+                                </button>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -56,3 +80,8 @@
     </div>
 </div>
 @endsection
+
+
+    {{-- <div class="form-group">
+        <a href="{{ route('classes.show',$module->class_id) }}" class="btn btn-primary">Kembali</a>
+    </div> --}}

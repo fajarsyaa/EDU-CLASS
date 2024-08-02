@@ -2,6 +2,7 @@
 @section('title', $title)
 @section('content')
 <div class="container">
+    <div class="card">
     <h1 style="color: white">Users</h1>
     <a href="{{ route('user.create') }}" class="btn btn-primary mb-2">Add User</a>
     @if (session('success'))
@@ -45,5 +46,6 @@
             @endforeach
         </tbody>
     </table>
+    </div>
 </div>
 @endsection
