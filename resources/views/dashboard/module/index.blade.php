@@ -100,29 +100,48 @@
 @endsection
 
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script>
-   const showComments = (i) => {
-         const comments = $(`#comments_${i.id}`);
-         if (comments.is('[hidden]')) {
-            comments.removeAttr('hidden');
-            comments.append(`
-               <li class="mb-2 border rounded p-2 bg-white">
-                     <div class="d-flex">
-                        <img src="../../assets/images/avatars/avtar_2.png" alt="userimg" class="avatar-50 p-1 pt-2 bg-soft-primary rounded-pill img-fluid">
-                        <br/>
-                        <div class="ms-3">
-                           <h6 class="mb-1">Monty Carlo</h6>
-                           <p class="mb-1">Lorem ipsum dolor sit amet</p>
-                           <div class="d-flex flex-wrap align-items-center mb-1">
-                                 <span> 5 min </span>
-                           </div>
-                        </div>
-                     </div>
-               </li>
-            `);
-         } else {
-            comments.attr('hidden', true);
-            comments.empty();
-         }
-   }
+   const base_url = "{{ url('/') }}";
+
+const showComments = (i) => {
+    const comments = $(`#comments_${i.id}`);
+    const apiUrl = `${base_url}/comments/${i.id}`;
+
+    if (comments.is('[hidden]')) {
+        comments.removeAttr('hidden');
+        
+        $.ajax({
+            url: apiUrl,
+            method: 'GET',
+            success: function(data) {
+                comments.empty();
+                data.forEach(comment => {
+                  const createdAt = moment(comment.created_at).fromNow();
+                  comments.append(`
+                        <li class="mb-2 border rounded p-2 bg-white">
+                            <div class="d-flex">
+                                <img src="../../assets/images/avatars/avtar_2.png" alt="userimg" class="avatar-50 p-1 pt-2 bg-soft-primary rounded-pill img-fluid">
+                                <div class="ms-3">
+                                    <h6 class="mb-1">${comment.user.fullname}</h6>
+                                    <p class="mb-1 h6">${comment.message}</p>
+                                    <div class="d-flex flex-wrap align-items-center mb-1">
+                                        <span>${createdAt}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                  `);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching comments:', error);
+            }
+        });
+    } else {
+        comments.attr('hidden', true);
+        comments.empty();
+    }
+}
+
 </script>

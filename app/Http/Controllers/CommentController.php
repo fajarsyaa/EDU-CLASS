@@ -7,13 +7,20 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    // Display a listing of the comments
-    public function index()
+    public function index(Request $request)
     {
-        $comments = Comment::all();
-        return view('comments.index', compact('comments'));
-    }
+        $moduleId = $request->query('moduleId');
+        $query = Comment::with('user')->orderBy('created_at', 'asc');
+    
+        if (!is_null($moduleId)) {
+            $query->where('module_id', $moduleId);
+        }
 
+        $comments = $query->get();
+
+        return response()->json($comments);
+    }
+    
     // Show the form for creating a new comment
     public function create()
     {
@@ -30,6 +37,7 @@ class CommentController extends Controller
         ]);
 
         Comment::create($request->all());
+
         return redirect()->back()->with('success', 'Comment created successfully.');
     }
 

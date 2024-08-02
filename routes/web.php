@@ -46,10 +46,17 @@ Route::group(['middleware' => ['auth', 'teacher'], 'prefix' => 'classes'], funct
 });
 
 Route::resource('/user-classes', UserClassController::class)->middleware('auth');
-Route::resource('/classes',ClassModelController::class);
+// Route::resource('/classes',ClassModelController::class);
 
-Route::resource('/comments', CommentController::class)->middleware('auth');
-Route::get('comments/{module_id}', [CommentController::class, 'getComments'])->name('comments.get');
+Route::middleware('auth')->prefix('comments')->group(function () {
+    Route::get('/{moduleId}', [CommentController::class, 'index'])->name('comments.index');
+    Route::get('/create', [CommentController::class, 'create'])->name('comments.create');
+    Route::post('/', [CommentController::class, 'store'])->name('comments.store');
+    Route::get('/{comment}', [CommentController::class, 'show'])->name('comments.show');
+    Route::get('/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+    Route::put('/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+});
 
 
 Route::prefix('module')->group(function () {
