@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class ClassModelController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');        
+        $this->middleware('teacher')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      */

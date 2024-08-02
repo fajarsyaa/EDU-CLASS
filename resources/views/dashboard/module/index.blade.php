@@ -65,7 +65,7 @@
                   <ul class="list-inline rounded m-0 border p-1" id="comments_{{$item->id}}" hidden>
                   </ul>
                
-                  <form class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
+                  <!-- <form class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
                      <input type="text" class="form-control rounded" placeholder="Lovely!">
                      <div class="comment-attagement d-flex">
                         <a href="javascript:void(0);" class="text-body">
@@ -74,6 +74,20 @@
                               </path>                                
                            </svg>                            
                         </a>
+                     </div>
+                  </form> -->
+                  <form action="{{ route('comments.store') }}" method="POST" class="comment-text d-flex align-items-center mt-3">
+                     @csrf
+                     <input type="hidden" name="module_id" value="{{$item->id}}">
+                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                     <input type="text" class="form-control rounded" placeholder="Add a comment..." name="message" required>
+                     <div class="comment-attagement d-flex ms-2">
+                        <button type="submit" class="text-body">
+                        <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    
+                              <path d="M15.8325 8.17463L10.109 13.9592L3.59944 9.88767C2.66675 9.30414 2.86077 7.88744 3.91572 7.57893L19.3712 3.05277C20.3373 2.76963 21.2326 3.67283 20.9456 4.642L16.3731 20.0868C16.0598 21.1432 14.6512 21.332 14.0732 20.3953L10.106 13.9602" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                              </path>                                
+                           </svg> 
+                        </button>
                      </div>
                   </form>
                </div>                              

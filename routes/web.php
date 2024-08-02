@@ -27,6 +27,7 @@ Route::post('/login', [UserController::class, 'authenticate'])->name('login.auth
 Route::get('/register', [UserController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/register', [UserController::class, 'register_create'])->name('register.create')->middleware('guest');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/', [DashboardController::class, 'index'])->name("index");
 Route::get('/user-list', [UserController::class, 'userList'])->name('user.list')->middleware('auth');
 Route::get('/user-create', [UserController::class, 'userCreate'])->name('user.create')->middleware('auth');
 Route::post('/user-create-action', [UserController::class, 'userCreateAction'])->name('user.createaction')->middleware('auth');
@@ -43,8 +44,13 @@ Route::group(['middleware' => ['auth', 'teacher'], 'prefix' => 'classes'], funct
     Route::delete('/{class}', [ClassModelController::class, 'destroy'])->name('classes.destroy');
     Route::get('/{class}', [ClassModelController::class, 'show'])->name('classes.show');
 });
-Route::resource('/comments', CommentController::class)->middleware('auth');
+
 Route::resource('/user-classes', UserClassController::class)->middleware('auth');
+Route::resource('/classes',ClassModelController::class);
+
+Route::resource('/comments', CommentController::class)->middleware('auth');
+Route::get('comments/{module_id}', [CommentController::class, 'getComments'])->name('comments.get');
+
 
 Route::prefix('module')->group(function () {
     Route::get('/', [ModuleController::class, 'index'])->name('module.index');
@@ -55,4 +61,5 @@ Route::prefix('module')->group(function () {
     Route::patch('/approve/{id}', [ModuleController::class, 'approve'])->name('module.approve');
     Route::match(['put', 'patch'], '/{id}', [ModuleController::class, 'update'])->name('module.update');
     Route::delete('/{id}', [ModuleController::class, 'destroy'])->name('module.destroy');
+    
 });
