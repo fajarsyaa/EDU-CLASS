@@ -10,7 +10,7 @@ class Module extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'create_by', 'status',
+        'name', 'create_by', 'status', 'class_id','desc'
     ];
 
     public function creator()
@@ -18,13 +18,14 @@ class Module extends Model
         return $this->belongsTo(User::class, 'create_by');
     }
 
+    public function class()
+    {
+        return $this->belongsTo(ClassModel::class, 'class_id');
+    }
+
     public function items()
     {
         return $this->hasMany(ModuleItem::class);
     }
 
-    public function classes()
-    {
-        return $this->belongsToMany(ClassModel::class, 'class_module');
-    }
 }

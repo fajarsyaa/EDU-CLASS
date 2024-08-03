@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('create_by')->constrained('users')->onDelete('cascade');
+            $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
             $table->string('status');
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }

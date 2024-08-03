@@ -13,16 +13,19 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'username', 'password', 'fullname', 'role',
+        'username',
+        'fullname',
+        'email',
+        'password',
+        'role'
     ];
 
-    public function classes()
-    {
-        return $this->hasMany(ClassModel::class);
-    }
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
