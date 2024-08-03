@@ -199,7 +199,7 @@
                             </li>                                                      
                         </ul>
                     </li>
-                    @if (Auth::user()->role == 'admin')
+                    @if (Auth::check() && Auth::user()->role == 'admin')
 
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-kelas" role="button" aria-expanded="false" aria-controls="sidebar-user">

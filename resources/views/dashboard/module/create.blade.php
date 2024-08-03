@@ -37,7 +37,7 @@
                                     Mohon isi deskripsi kelas
                                 </div>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-control" id="status" name="status" required>
                                     <option value="" disabled selected>Pilih Status</option>
@@ -50,7 +50,7 @@
                                 <div class="invalid-feedback">
                                     Mohon pilih status
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group module-item"></div>
                             <div class="form-group">
                                 <button type="button" class="btn btn-sm btn-outline-info" onclick="addItem('url')">
