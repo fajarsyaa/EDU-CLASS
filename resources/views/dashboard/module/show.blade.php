@@ -48,6 +48,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <div class="ml-auto">
+                            @if (Auth::user()->role == 'admin')
                             <form action="{{ route('module.approve', ['id' => $module->id]) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('PATCH')
@@ -71,6 +72,8 @@
                                     Reject
                                 </button>
                             </form>
+                            @endif
+
                             
                         </div>
                     </div>
