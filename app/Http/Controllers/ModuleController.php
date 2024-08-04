@@ -34,7 +34,6 @@ class ModuleController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'create_by' => 'required|exists:users,id',
-            'status' => 'required',
             'class_id'=>'required',
         ]);
 
